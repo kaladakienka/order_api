@@ -82,8 +82,15 @@ class OrderController extends BaseController
         }
     }
 
-    public function listOrders()
+    public function listOrders(Request $request)
     {
-
+        try {
+            $page = (int) $request->query('page', 1);
+            $limit = (int) $request->query('limit', 10);
+            $orders = $this->orderService->listOrders($page, $limit);
+            return $this->sendResponse($orders, 200);
+        } catch (\Exception $ex) {
+            return $this->sendResponse([ 'error' => $ex->getMessage() ], 500);
+        }
     }
 }

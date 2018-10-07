@@ -2,10 +2,11 @@
 
 namespace App\Repositories;
 
+use App\Interfaces\OrderRepositoryInterface;
 use Log;
 use App\Models\Order;
 
-class OrderRepository
+class OrderRepository implements OrderRepositoryInterface
 {
     private $order;
 
@@ -34,5 +35,11 @@ class OrderRepository
             throw new \Exception(Order::ORDER_ALREADY_BEEN_TAKEN, 409);
         }
         return $order->update($params);
+    }
+
+    public function listOrders(int $page, int $limit) : array
+    {
+        $offset = ($page - 1) * $limit;
+        return $this->order->skip($offset)->take($limit)->get()->toArray();
     }
 }

@@ -45,8 +45,17 @@ class OrderService
     public function editOrder(string $orderId, array $params) : bool
     {
         $updated = $this->orderRepo->editOrder($orderId, $params);
-        Log::info('Successfully edited order with id - ' . $orderId);
+        Log::info('Successfully edited order with id ' . $orderId . ' with params ' .
+            json_encode($params));
         return $updated;
+    }
+
+    public function listOrders(int $page, int $limit) : array
+    {
+        $orders = $this->orderRepo->listOrders($page, $limit);
+        Log::info('Successfully fetched orders for page ' . $page . ' with limit ' . $limit);
+        Log::info(json_encode($orders));
+        return $orders;
     }
 
     /**
