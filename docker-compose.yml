@@ -1,20 +1,22 @@
 version: '2'
 services:
     mysql:
+        container_name: orderchallenge_mysql
         image: mysql
         ports:
             - 3306:3306
         environment:
             MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
-            MYSQL_PASSWORD: "123456"
-            MYSQL_USER: "root"
-            MYSQL_DATABASE: "order_challenge"
+            MYSQL_PASSWORD: ${DB_PASSWORD}
+            MYSQL_USER: ${DB_USERNAME}
+            MYSQL_DATABASE: ${DB_DATABASE}
         volumes:
             - ./data:/docker-entrypoint-initdb.d
         networks:
             - main_network
 
     php:
+        container_name: orderchallenge_php
         build: ./image/php/
         ports:
             - 9000:9000
@@ -24,6 +26,7 @@ services:
             - main_network
 
     nginx:
+        container_name: orderchallenge_nginx
         build: ./image/nginx
         ports:
             - 8080:80

@@ -93,6 +93,8 @@ $app->singleton(
 |
 */
 
+$app->bind('App\Interfaces\OrderRepositoryInterface', 'App\Repositories\OrderRepository');
+
 $app->router->group([
     'namespace' => 'App\Http\Controllers',
 ], function ($router) {

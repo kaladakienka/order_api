@@ -3,17 +3,19 @@
 namespace App\Services;
 
 use Log;
-use Config;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
-use App\Repositories\OrderRepository;
+use App\Interfaces\OrderRepositoryInterface;
 
 class OrderService
 {
+    /** @var Client  */
     private $client;
+
+    /** @var OrderRepositoryInterface  */
     private $orderRepo;
 
-    public function __construct(Client $client, OrderRepository $orderRepo)
+    public function __construct(Client $client, OrderRepositoryInterface $orderRepo)
     {
         $this->client = $client;
         $this->orderRepo = $orderRepo;
@@ -27,6 +29,8 @@ class OrderService
      */
     public function createOrder(array $origin, array $destination) : array
     {
+        Log::info('Creating order with origin ' . json_encode($origin) . ' and destination ' .
+            json_encode($destination));
         $distance = $this->fetchDistance($origin, $destination);
         $order = [
             'distance' => $distance['value']
@@ -38,15 +42,18 @@ class OrderService
 
     /**
      * @param string $orderId
-     * @param array $params
+     * @param string $status
      * @return bool
      * @throws \Exception
      */
-    public function editOrder(string $orderId, array $params) : bool
+    public function editOrder(string $orderId, string $status) : bool
     {
+        Log::info('Editing order with id ' . $orderId . ' with status ' . $status);
+        $params = [
+            'status' => $status
+        ];
         $updated = $this->orderRepo->editOrder($orderId, $params);
-        Log::info('Successfully edited order with id ' . $orderId . ' with params ' .
-            json_encode($params));
+        Log::info('Successfully edited order ' . $orderId);
         return $updated;
     }
 
@@ -54,7 +61,6 @@ class OrderService
     {
         $orders = $this->orderRepo->listOrders($page, $limit);
         Log::info('Successfully fetched orders for page ' . $page . ' with limit ' . $limit);
-        Log::info(json_encode($orders));
         return $orders;
     }
 

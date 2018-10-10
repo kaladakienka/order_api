@@ -1,0 +1,26 @@
+{
+  "destination_addresses": [
+    "7, Ikoyi Club 1938 Rd, Ikoyi, Lagos, Nigeria"
+  ],
+  "origin_addresses": [
+    "6 Bendel Cl, Victoria Island, Lagos, Nigeria"
+  ],
+  "rows": [
+    {
+      "elements": [
+        {
+          "distance": {
+            "text": "5.6 km",
+            "value": 5560
+          },
+          "duration": {
+            "text": "13 mins",
+            "value": 751
+          },
+          "status": "OK"
+        }
+      ]
+    }
+  ],
+  "status": "OK"
+}
