@@ -10,7 +10,7 @@ The following environment variables must be added to the .env file within the `/
 
 ```
 DB_CONNECTION=mysql
-DB_HOST=orderchallenge_mysql
+DB_HOST=orderapi_mysql
 DB_PORT=3306
 DB_DATABASE={your_database_name}
 DB_USERNAME={your_username}
@@ -29,7 +29,8 @@ DB_USERNAME={your_username}
 DB_PASSWORD={your_database_passord}
 ```
 
-These will be used to configure the mysql container when docker is run
+These will be used to configure the mysql container when docker is run, there is a sample 
+`.env` provided in the root directory
 
 ##### Assumptions made when build the API
 

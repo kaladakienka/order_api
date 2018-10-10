@@ -1,7 +1,7 @@
 version: '2'
 services:
     mysql:
-        container_name: orderchallenge_mysql
+        container_name: orderapi_mysql
         image: mysql
         ports:
             - 3306:3306
@@ -16,8 +16,10 @@ services:
             - main_network
 
     php:
-        container_name: orderchallenge_php
-        build: ./image/php/
+        container_name: orderapi_php
+        build:
+            context: .
+            dockerfile: ./image/php/Dockerfile
         ports:
             - 9000:9000
         volumes:
@@ -26,7 +28,7 @@ services:
             - main_network
 
     nginx:
-        container_name: orderchallenge_nginx
+        container_name: orderapi_nginx
         build: ./image/nginx
         ports:
             - 8080:80
